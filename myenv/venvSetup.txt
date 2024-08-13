@@ -1,0 +1,4 @@
+PS C:\Users\eaoleary\project> python3 -m venv myenv  
+PS C:\Users\eaoleary\project> myenv\Scripts\Activate
+PS C:\Users\eaoleary\project> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -Force;
+PS C:\Users\eaoleary\project> myenv\Scripts\Activate

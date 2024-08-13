@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>A2A Execution History</title>
+    <!-- <style>
+      .search {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+    </style> -->
+  </head>
+  <body>
+
+    <h1>A2A Execution History</h1>
+
+
+    <div class="search">
+      <label for="search-process">Search for a process name:</label>
+      <input type="text" id="search-process" name="search-process" placeholder="Search..." value="{{ request.args['search_process'] or '' }}">
+      
+      <button type="submit" id="search-submit">Search</button>
+      <label for="status-filter">Filter by execution status:</label>
+      <select id="status-filter" name="status-filter">
+          <option value="" {% if request.args["status_filter"] == "" %}selected{% endif %}>Any</option>
+          <option value="COMPLETED" {% if request.args["status_filter"] == "COMPLETED" %}selected{% endif %}>COMPLETED</option>
+          <option value="DISCARDED" {% if request.args["status_filter"] == "DISCARDED" %}selected{% endif %}>DISCARDED</option>
+          <option value="FAILED" {% if request.args["status_filter"] == "FAILED" %}selected{% endif %}>FAILED</option>
+      </select>
+  
+      <label for="date-start">Filter by date range:</label>
+      <input type="date" id="date-start" name="date-start" placeholder="Start Date" value="{{ request.args['date_start'] or '' }}">
+      <input type="date" id="date-end" name="date-end" placeholder="End Date" value="{{ request.args['date_end'] or '' }}">
+  
+      <button type="button" onclick="tableToCSV()">
+          Download CSV
+      </button>
+  </div>
+
+    <!-- Add pagination navigation -->
+    <div class="pagination">
+      <div class="navigation">
+        {% if page > 1 %}
+          <a href="?page=1&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">First</a>
+          <a href="?page={{ page - 1 }}&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">Prev</a>
+        {% endif %}
+        {% if page < total_pages %}
+          <a href="?page={{ page + 1 }}&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">Next</a>
+          <a href="?page={{ total_pages }}&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">Last</a>
+        {% endif %}
+      </div>
+      <div class="info">Page {{ page }} of {{ total_pages }}</div>
+    </div>
+
+    <!-- <style>
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+    
+        .pagination .info {
+            font-weight: bold;
+        }
+    
+        .pagination .navigation a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: blue;
+        }
+    
+        .pagination .navigation a:hover {
+            text-decoration: underline;
+        }
+    </style> -->
+    <table>
+      <thead>
+        <tr>
+          <th>Process Name</th>
+          <th>Execution Status</th>
+          <th>Execution Start</th>
+          <th>Execution End</th>
+          <th>Execution Duration</th>
+          <th>Message Guid</th>
+          <th>When Inserted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        {% if loop.index0 < 10000 %}
+        <tr>
+          <td>{{ record.process_name }}</td>
+          <td>{{ record.execution_status }}</td>
+          <td>{{ record.execution_start.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{ record.execution_end.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td>{{ record.execution_duration }}</td>
+          <td>{{ record.message_guid }}</td>
+          <td>{{ record.WHEN_INSERTED.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- Add pagination navigation -->
+<div class="pagination">
+  <div class="navigation">
+    {% if page > 1 %}
+      <a href="?page=1&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">First</a>
+      <a href="?page={{ page - 1 }}&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">Prev</a>
+    {% endif %}
+    {% if page < total_pages %}
+      <a href="?page={{ page + 1 }}&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">Next</a>
+      <a href="?page={{ total_pages }}&search_process={{ request.args['search_process'] or '' }}&status_filter={{ request.args['status_filter'] or '' }}&date_start={{ request.args['date_start'] or '' }}&date_end={{ request.args['date_end'] or '' }}">Last</a>
+    {% endif %}
+  </div>
+  <div class="info">Page {{ page }} of {{ total_pages }}</div>
+</div>
+
+    <script>
+function filterRows() {
+    const searchValue = document.querySelector("#search-process").value;
+    const statusFilter = document.querySelector("#status-filter").value;
+    const startDate = document.querySelector("#date-start").value;
+    const endDate = document.querySelector("#date-end").value;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('search_process', searchValue);
+    url.searchParams.set('status_filter', statusFilter);
+    url.searchParams.set('date_start', startDate);
+    url.searchParams.set('date_end', endDate);
+
+    window.location.href = url;
+}
+
+      document.querySelector("#search-submit").addEventListener("click", filterRows);
+      document.querySelector("#status-filter").addEventListener("change", filterRows);
+      document.querySelector("#date-start").addEventListener("change", filterRows);
+      document.querySelector("#date-end").addEventListener("change", filterRows);
+    </script>
+
+<script type="text/javascript">
+  function tableToCSV() {
+
+      // Variable to store the final csv data
+      let csv_data = [];
+
+      // Get each row data
+      let rows = document.getElementsByTagName('tr');
+      for (let i = 0; i < rows.length; i++) {
+
+          // Get each column data
+          let cols = rows[i].querySelectorAll('td,th');
+
+          // Stores each csv row data
+          let csvrow = [];
+          for (let j = 0; j < cols.length; j++) {
+
+              // Get the text data of each cell
+              // of a row and push it to csvrow
+              csvrow.push(cols[j].innerHTML);
+          }
+
+          // Combine each column value with comma
+          csv_data.push(csvrow.join(","));
+      }
+
+      // Combine each row data with new line character
+      csv_data = csv_data.join('\n');
+
+      // Call this function to D csv file  
+      DCSVFile(csv_data);
+
+  }
+
+  function DCSVFile() {
+    const searchValue = document.querySelector("#search-process").value;
+    const statusFilter = document.querySelector("#status-filter").value;
+    const startDate = document.querySelector("#date-start").value;
+    const endDate = document.querySelector("#date-end").value;
+
+    const url = new URL(window.location.href);
+    // url.pathname = "/D_csv";
+    url.pathname = "/download_csv";
+    url.searchParams.set('search_process', searchValue);
+    url.searchParams.set('status_filter', statusFilter);
+    url.searchParams.set('date_start', startDate);
+    url.searchParams.set('date_end', endDate);
+
+    window.location.href = url;
+}
+</script>
+
+  </body>
+</html>
+{% endblock %}

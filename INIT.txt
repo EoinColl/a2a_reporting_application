@@ -1,0 +1,31 @@
+insert values
+INSERT INTO "A2AMON"."A2A_EXECUTION_HISTORY" (process_name, execution_status, execution_start, execution_end, execution_duration, "WHEN_INSERTED") 
+VALUES ('INIT_process_name', 'COMPLETED', '1970-01-01T00:00:00', '1970-01-01T00:00:01', '1 ms', '2024-07-22 06:16:16.21114-04');
+
+check for duplicates
+SELECT process_name, execution_start, execution_end, COUNT(*)
+FROM "A2AMON"."A2A_EXECUTION_HISTORY"
+GROUP BY process_name, execution_start, execution_end, execution_duration
+HAVING COUNT(*) > 1
+ORDER BY process_name, execution_start, execution_end, execution_duration;
+
+delete duplicates
+DELETE FROM "A2AMON"."A2A_EXECUTION_HISTORY" 
+WHERE (process_name, execution_status, execution_start, execution_end, ctid) NOT IN (
+  SELECT process_name, execution_status, execution_start, execution_end, min_ctid
+  FROM (
+    SELECT process_name, execution_status, execution_start, execution_end,
+           MIN(ctid) as min_ctid
+    FROM "A2AMON"."A2A_EXECUTION_HISTORY"
+    GROUP BY process_name, execution_status, execution_start, execution_end
+  ) subquery
+);
+
+optimised deletion of duplicates
+DELETE FROM "A2AMON"."A2A_EXECUTION_HISTORY" e1
+USING "A2AMON"."A2A_EXECUTION_HISTORY" e2
+WHERE e1.process_name = e2.process_name
+AND e1.execution_status = e2.execution_status
+AND e1.execution_start = e2.execution_start
+AND e1.execution_end = e2.execution_end
+AND e1.ctid < e2.ctid;

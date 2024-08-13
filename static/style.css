@@ -1,0 +1,84 @@
+h1 {
+    font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .search {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  table, th, td {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    padding: 8px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .active {
+    background-color: #d3d1d1;
+  }
+  
+  th {
+    background-color: #eeeeee;
+  }
+
+  nav {
+    font-family: Arial, Helvetica, sans-serif;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+  }
+
+  body {
+    overflow-x: scroll;
+}
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #eeeeee;
+  }
+
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  
+  li a:hover {
+    background-color: #eaeaea;
+  }
+
+  .main-content {
+    margin-top: 60px;
+  }
+
+  .Home {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #eeeeee; 
+    padding: 20px;
+    border-radius: 5px; /* Add rounded corners to the box */
+  }
+  
+  .pagination {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
