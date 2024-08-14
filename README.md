@@ -42,3 +42,6 @@ python3 app.py
 
 ![image](https://github.com/user-attachments/assets/e6578a48-f211-4dbb-b92d-6c5ea483c28f)
 
+![image](https://github.com/user-attachments/assets/5683287c-db30-41c8-bf24-2f963e96de43)
+
+![image](https://github.com/user-attachments/assets/14036dc9-560d-44fd-a748-1b02be1259fc)
