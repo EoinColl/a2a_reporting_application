@@ -6,14 +6,7 @@
   <head>
     <meta charset="utf-8">
     <title>A2A Execution History</title>
-    <!-- <style>
-      .search {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 16px;
-      }
-    </style> -->
+
   </head>
   <body>
 
@@ -57,28 +50,6 @@
       <div class="info">Page {{ page }} of {{ total_pages }}</div>
     </div>
 
-    <!-- <style>
-        .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
-    
-        .pagination .info {
-            font-weight: bold;
-        }
-    
-        .pagination .navigation a {
-            margin: 0 8px;
-            text-decoration: none;
-            color: blue;
-        }
-    
-        .pagination .navigation a:hover {
-            text-decoration: underline;
-        }
-    </style> -->
     <table>
       <thead>
         <tr>
@@ -185,7 +156,6 @@ function filterRows() {
     const endDate = document.querySelector("#date-end").value;
 
     const url = new URL(window.location.href);
-    // url.pathname = "/D_csv";
     url.pathname = "/download_csv";
     url.searchParams.set('search_process', searchValue);
     url.searchParams.set('status_filter', statusFilter);
