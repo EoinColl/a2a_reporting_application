@@ -49,7 +49,7 @@ This is the page to view execution history
 
 ![image](https://github.com/user-attachments/assets/e6578a48-f211-4dbb-b92d-6c5ea483c28f)
 
-Here is an example where dearch process execution status and date range are specified
+Here is an example where process name, execution status and date range are specified
 
 ![image](https://github.com/user-attachments/assets/5683287c-db30-41c8-bf24-2f963e96de43)
 
