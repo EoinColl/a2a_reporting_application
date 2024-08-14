@@ -29,8 +29,11 @@ Install the requirements
 ```bash
 pip install -r requirements.txt
 ```
+## Usage
 
-Run application
+When running the application locally, ensure connection to the Dublin gateway on Global Protect
+
+Run the application
 ```bash
 python3 app.py
 ```
