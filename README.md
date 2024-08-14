@@ -13,5 +13,9 @@ git clone https://github.com/amd-eaoleary/a2a_reporting_application.git
 
 cd a2a_reporting_application
 
-pip install -r /path/to/requirements.txt
+python3 -m venv myenv
+
+myenv\Scripts\Activate
+
+pip install -r requirements.txt
 ```
