@@ -1,5 +1,0 @@
--   get user credential for Odata for old client 
-
--   get github account and store files in repo (account for A2A team)
-
--   create documentation
