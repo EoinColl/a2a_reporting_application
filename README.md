@@ -37,3 +37,8 @@ Run the application
 ```bash
 python3 app.py
 ```
+
+![image](https://github.com/user-attachments/assets/53754f34-43b5-4510-ae2f-bbfb5bc3da82)
+
+![image](https://github.com/user-attachments/assets/e6578a48-f211-4dbb-b92d-6c5ea483c28f)
+
