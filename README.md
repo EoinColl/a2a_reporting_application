@@ -40,13 +40,18 @@ python3 app.py
 
 Navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
-This is the home page
+This is the home page.
 Use the navbar to access either section
 
 ![image](https://github.com/user-attachments/assets/53754f34-43b5-4510-ae2f-bbfb5bc3da82)
 
+This is the page to view execution history
+
 ![image](https://github.com/user-attachments/assets/e6578a48-f211-4dbb-b92d-6c5ea483c28f)
+
+Here is an example where dearch process execution status and date range are specified
 
 ![image](https://github.com/user-attachments/assets/5683287c-db30-41c8-bf24-2f963e96de43)
 
+This is the page to view integration content
 ![image](https://github.com/user-attachments/assets/14036dc9-560d-44fd-a748-1b02be1259fc)
