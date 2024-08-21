@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from urllib.parse import quote
 from sqlalchemy.sql import text
-from sqlalchemy import and_, or_
 import csv
 import io
 from flask import Response
