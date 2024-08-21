@@ -7,12 +7,21 @@ import csv
 import io
 from flask import Response
 from datetime import datetime
+import configparser
 
 app = Flask(__name__)
 
-password = "A2@mOn123"
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+username = config.get('DatabaseCredentials', 'username')
+password = config.get('DatabaseCredentials', 'password')
+host = config.get('DatabaseCredentials', 'host')
+port = config.get('DatabaseCredentials', 'port')
+database = config.get('DatabaseCredentials', 'database')
+
 encoded_password = quote(password)
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://a2amon:{encoded_password}@atlvshrdpgdbd01:5432/a2amondev'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{username}:{encoded_password}@{host}:{port}/{database}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
