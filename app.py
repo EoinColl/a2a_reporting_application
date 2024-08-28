@@ -43,7 +43,7 @@ def view_execution_history():
     query = 'SELECT * FROM "A2AMON"."A2A_EXECUTION_HISTORY" WHERE 1=1'
 
     if search_process:
-        query += f" AND process_name LIKE '%%{search_process}%%'"
+        query += f" AND lower(process_name) LIKE lower('%%{search_process}%%')"
 
     if status_filter:
         query += f" AND execution_status = '{status_filter}'"
@@ -165,4 +165,4 @@ def download_csv():
     return Response(output, content_type='text/csv', headers={"Content-Disposition": f'attachment; filename={filename}'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host="0.0.0.0",port=5000)
