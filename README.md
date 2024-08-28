@@ -20,9 +20,17 @@ cd a2a_reporting_application
 
 Create and activate a virtual enviroment
 ```bash
-python3 -m venv myenv
+python3 -m venv a2a_reporting_dev
 
-myenv\Scripts\Activate
+a2a_reporting_dev\Scripts\Activate # For windows
+```
+
+```bash
+python3 -m venv a2a_reporting_dev
+
+run as bash
+
+source bin/activate # For linux
 ```
 
 Install the requirements
