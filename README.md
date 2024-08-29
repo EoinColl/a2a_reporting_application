@@ -26,11 +26,16 @@ a2a_reporting_dev\Scripts\Activate # For windows
 ```
 
 ```bash
-python3 -m venv a2a_reporting_dev
+/apps/AWS/venvBoto3/bin/python -m venv a2a_reporting_dev
 
 run as bash
 
 source bin/activate # For linux
+```
+
+Upgrade Pip
+```bash
+pip install --upgrade pip
 ```
 
 Install the requirements
@@ -43,7 +48,7 @@ When running the application locally, ensure connection to the Dublin gateway on
 
 Run the application
 ```bash
-python3 app.py
+nohup python3 app.py > log.txt 2>&1 &
 ```
 
 Navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
